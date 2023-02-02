@@ -219,6 +219,8 @@ void loop() {
     // Check bluetooth received message and control board accordingly
     if (message == "10"){
       timerDuration = 600000;
+      timeValue = timerDuration;
+      Reset();
     }
 
     // Subtract from countdown duration
