@@ -76,6 +76,10 @@ const byte rightPin = 22;
 // The array of RGB values assigned to each LED in the strip
 CRGB leds[NUM_LEDS];
 
+// Handle received and sent messages
+String message = "";
+char incomingChar;
+
 // Bounce objects to read debounced button input
 Bounce2::Button btnStart = Bounce2::Button();
 Bounce2::Button btnLeft = Bounce2::Button();
@@ -142,7 +146,7 @@ void setup() {
   state = State::Inactive;
 
   // Ready to Pair Bluetooth
-  SerialBT.begin("ESP32test"); //Bluetooth device name
+  SerialBT.begin("CountdownTimer"); //Bluetooth device name
   Serial.println("The device started, now you can pair it with bluetooth!");
 }
 
@@ -156,12 +160,16 @@ void loop() {
   btnRight.update();
 
   // Check whether any Bluetooth messages have arrived
-  if (Serial.available()) {
-      SerialBT.write(Serial.read());
+  if (SerialBT.available()) {
+    char incomingChar = SerialBT.read();
+    if(incomingChar != '\n'){
+      message += String(incomingChar);
     }
-    if (SerialBT.available()) {
-      Serial.write(SerialBT.read());
+    else{
+      message = "";
     }
+    Serial.write(incomingChar);
+  }
 
   // Grab the current timestamp
   unsigned long currentTime = millis();
@@ -207,6 +215,11 @@ void loop() {
 
     // Cycle colour hue while paused (BPM, from_value, to_value)
     timeHue = beatsin8(20, 0, 40);
+
+    // Check bluetooth received message and control board accordingly
+    if (message == "10"){
+      timerDuration = 600000;
+    }
 
     // Subtract from countdown duration
     if(btnLeft.pressed()) {
