@@ -206,7 +206,7 @@ void loop() {
     }
 
     // Toggle whether timer is active
-    if(btnStart.pressed()) {
+    if(btnStart.pressed()||message == "s") {
       Stop();
     }    
   }
@@ -234,7 +234,7 @@ void loop() {
       Reset();
     }
     // Start timer
-    if(btnStart.pressed()) {
+    if(btnStart.pressed()||message == "s") {
 
       // Set mode depending on whether duration had been set
       if(timerDuration == 0) { mode = Mode::CountUp; }
