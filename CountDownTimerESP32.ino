@@ -27,7 +27,7 @@
 // Total number of LEDs in the strip
 #define NUM_LEDS 120
 // The pin which is connected to the DataIn of the LED strip
-#define DATA_PIN 13
+#define DATA_PIN 16
 // If defined, timer shows minutes and seconds MM:SS, rather than seconds SSSS
 #define DISPLAY_MMSS
 
@@ -68,9 +68,9 @@ const uint32_t digits[10] = {
   0b00011111111000001111111111111111, // 9
 };
 // Input pins
-const byte leftPin = 35;
-const byte startPin = 27;
-const byte rightPin = 32;
+const byte leftPin = 17;
+const byte startPin = 21;
+const byte rightPin = 22;
 
 // GLOBALS
 // The array of RGB values assigned to each LED in the strip
@@ -211,13 +211,13 @@ void loop() {
     // Subtract from countdown duration
     if(btnLeft.pressed()) {
       if(timerDuration >= 60000) { timerDuration -= 60000; }
-      timeValue = timerDuration;
+      timeValue = timerDuration;    Serial.println(timeValue);
       Reset();
     }
     // Add to countdown duration
     if(btnRight.pressed()) {
       timerDuration += 60000;
-      timeValue = timerDuration;
+      timeValue = timerDuration;    Serial.println(timeValue);
       Reset();
     }
     // Start timer
