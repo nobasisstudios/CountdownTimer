@@ -9,7 +9,19 @@
 // For debouncing button input, see https://github.com/thomasfredericks/Bounce2
 #include <Bounce2.h>
 
+// Bluetooth library
+#include "BluetoothSerial.h"
+
 // DEFINES
+// Bluetooth Defines
+#if !defined(CONFIG_BT_ENABLED) || !defined(CONFIG_BLUEDROID_ENABLED)
+#error Bluetooth is not enabled! Please run `make menuconfig` to and enable it
+#endif
+
+#if !defined(CONFIG_BT_SPP_ENABLED)
+#error Serial Bluetooth not available or not enabled. It is only available for the ESP32 chip.
+#endif
+
 // How many LEDs are used in each digit
 #define NUM_LEDS_PER_DIGIT 30
 // Total number of LEDs in the strip
@@ -18,6 +30,9 @@
 #define DATA_PIN 13
 // If defined, timer shows minutes and seconds MM:SS, rather than seconds SSSS
 #define DISPLAY_MMSS
+
+// Initiate Bluetooth Serial Connection
+BluetoothSerial SerialBT;
 
 // CONSTANTS
 // The following array defines the sequence of LEDs that should be lit to represent each digit 0-9
@@ -54,7 +69,7 @@ const uint32_t digits[10] = {
 };
 // Input pins
 const byte leftPin = 35;
-const byte startPin = 34;
+const byte startPin = 27;
 const byte rightPin = 32;
 
 // GLOBALS
@@ -125,6 +140,10 @@ void setup() {
   btnRight.attach(rightPin, INPUT_PULLUP);
 
   state = State::Inactive;
+
+  // Ready to Pair Bluetooth
+  SerialBT.begin("ESP32test"); //Bluetooth device name
+  Serial.println("The device started, now you can pair it with bluetooth!");
 }
 
 
@@ -135,6 +154,14 @@ void loop() {
   btnStart.update();
   btnLeft.update();
   btnRight.update();
+
+  // Check whether any Bluetooth messages have arrived
+  if (Serial.available()) {
+      SerialBT.write(Serial.read());
+    }
+    if (SerialBT.available()) {
+      Serial.write(SerialBT.read());
+    }
 
   // Grab the current timestamp
   unsigned long currentTime = millis();
