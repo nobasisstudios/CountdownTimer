@@ -217,11 +217,27 @@ void loop() {
     timeHue = beatsin8(20, 0, 40);
 
     // Check bluetooth received message and control board accordingly
-    if (message == "10"){
-      timerDuration = 600000;
-      timeValue = timerDuration;
-      Reset();
-    }
+    if (message == "0"){timerDuration = 0; timeValue = timerDuration; Reset();}
+    if (message == "1"){timerDuration = 60000; timeValue = timerDuration; Reset();}
+    if (message == "2"){timerDuration = 120000; timeValue = timerDuration; Reset();}
+    if (message == "3"){timerDuration = 180000; timeValue = timerDuration; Reset();}
+    if (message == "4"){timerDuration = 240000; timeValue = timerDuration; Reset();}
+    if (message == "5"){timerDuration = 300000; timeValue = timerDuration; Reset();}
+    if (message == "6"){timerDuration = 360000; timeValue = timerDuration; Reset();}
+    if (message == "7"){timerDuration = 420000; timeValue = timerDuration; Reset();}
+    if (message == "8"){timerDuration = 480000; timeValue = timerDuration; Reset();}
+    if (message == "9"){timerDuration = 540000; timeValue = timerDuration; Reset();}
+    if (message == "10"){timerDuration = 600000; timeValue = timerDuration; Reset();}
+    if (message == "11"){timerDuration = 660000; timeValue = timerDuration; Reset();}
+    if (message == "12"){timerDuration = 720000; timeValue = timerDuration; Reset();}
+    if (message == "13"){timerDuration = 780000; timeValue = timerDuration; Reset();}
+    if (message == "14"){timerDuration = 840000; timeValue = timerDuration; Reset();}
+    if (message == "15"){timerDuration = 900000; timeValue = timerDuration; Reset();}
+    if (message == "16"){timerDuration = 960000; timeValue = timerDuration; Reset();}
+    if (message == "17"){timerDuration = 1020000; timeValue = timerDuration; Reset();}
+    if (message == "18"){timerDuration = 1080000; timeValue = timerDuration; Reset();}
+    if (message == "19"){timerDuration = 1140000; timeValue = timerDuration; Reset();}
+    if (message == "20"){timerDuration = 1200000; timeValue = timerDuration; Reset();}
 
     // Subtract from countdown duration
     if(btnLeft.pressed()) {
