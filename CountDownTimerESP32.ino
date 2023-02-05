@@ -217,9 +217,11 @@ void loop() {
     timeHue = beatsin8(20, 0, 40);
 
     // Check bluetooth received message and control board accordingly
-    timerDuration = 60000 * message.toInt();
-    timeValue = timerDuration;
-    Reset();
+    if (message.toInt() != 0 || message == "0") {
+      timerDuration = 60000 * message.toInt();
+      timeValue = timerDuration;
+      Reset();
+    }
 
     // Subtract from countdown duration
     if(btnLeft.pressed()) {
